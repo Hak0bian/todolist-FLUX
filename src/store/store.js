@@ -1,20 +1,25 @@
 
 export const initState = {
-    text : "",
+    title : "",
     tasks : [],
     error : "",
 }
 
 export const reducer = (state, action) => {
     switch(action.type){
+        case "todos":
+            return {
+                ...state,
+                tasks: action.payload 
+            };
         case "inp" :
             return {
                 ...state,
-                text: action.payload,
+                title: action.payload,
                 error: ""
-            }
+            };
         case "add" : 
-            if (!state.text.trim()){
+            if (!state.title.trim()){
                 return {
                     ...state,
                     error: "Field is Required !"
@@ -27,14 +32,13 @@ export const reducer = (state, action) => {
                     ...state.tasks, 
                     {
                         id: Date.now(),
-                        text: action.payload,
+                        title: action.payload,
                         completed: false,
                         edit: false,
                     }
                 ], 
-                text: "" 
+                title: "" 
             };
-
         case "edit" : 
             return {
                 ...state,
@@ -46,21 +50,19 @@ export const reducer = (state, action) => {
                     : task
                 )
             };
-            
         case "change" : 
             return {
                 ...state,
                 tasks: state.tasks.map((task) => task.id === action.payload.id
                     ? {
                         ...task,
-                        text: action.payload.text,
+                        title: action.payload.title,
                     }
                     : task
                 )
-            }
-
+            };
         case "save":
-            if(!action.payload.text.trim()) {
+            if(!action.payload.title.trim()) {
                 return {
                     ...state,
                 }
@@ -71,13 +73,12 @@ export const reducer = (state, action) => {
                 tasks: state.tasks.map((task) => task.id === action.payload.id
                     ? { 
                         ...task, 
-                        text: action.payload.text,  
+                        title: action.payload.title,  
                         edit: false  
                       }
                     : task
                 )
             };
-
         case "check":
             return {
                 ...state,
@@ -89,19 +90,16 @@ export const reducer = (state, action) => {
                     : task 
                 )
             };
-
         case "delete" : 
             return {
                 ...state,
                 tasks: state.tasks.filter(task => task.id !== action.payload)
-            }
-
+            };
         case "clear" :
             return {
                 ...state,
                 tasks: action.payload
-            }
-
+            };
         default :
             return state
     }

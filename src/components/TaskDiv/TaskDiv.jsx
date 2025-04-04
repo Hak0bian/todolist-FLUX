@@ -10,19 +10,19 @@ const TaskDiv = ({task, dispatch}) => {
                 task.edit 
                 ? <input 
                     className={st.newInp} 
-                    value={task.text} 
-                    onChange={(e) => dispatch({type: "change", payload: {id: task.id, text: e.target.value}})}
+                    value={task.title} 
+                    onChange={(e) => dispatch({type: "change", payload: {id: task.id, title: e.target.value}})}
                 />
                 : <p 
                     className={task.completed ? st.line : ""} 
                     onDoubleClick={() => dispatch({type: "edit", payload: task})}> 
-                    {task.text} 
+                    {task.title} 
                 </p>
             }
             <div className={st.iconsDiv}>
                 <button 
                     className={st.save} 
-                    onClick={() => dispatch({type: "save", payload: {id: task.id, text: task.text}})}> 
+                    onClick={() => dispatch({type: "save", payload: {id: task.id, title: task.title}})}> 
                     <LuBookmarkCheck/> 
                 </button>
                 <button 

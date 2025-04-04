@@ -1,11 +1,14 @@
-import { useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { initState, reducer } from './store/store'
-import TaskDiv from './components/TaskDiv/TaskDiv'
-import FormDiv from './components/FormDiv/FormDiv'
+import { FormDiv, TaskDiv, API } from "./components"
 import './App.css'
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initState)
+
+  useEffect(() => {
+    API.getTodos(dispatch)
+  }, [])
 
   return (
     <section className="app">
